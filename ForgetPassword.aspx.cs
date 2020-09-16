@@ -12,7 +12,13 @@ namespace Template
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if ()
+            {
+                if (Request.Form["account"] != null && Request.Form["email"] != null)
+                {
+                    InquireTrigger();
+                }
+            }
         }
 
 
@@ -37,8 +43,8 @@ namespace Template
         /// </summary>
         private void SetData()
         {
-            inquire_account = $"";
-            inquire_email = $"";
+            inquire_account = $"" + Request.Form["account"];
+            inquire_email = $"" + Request.Form["email"];
         }
 
         /// <summary>
@@ -52,18 +58,18 @@ namespace Template
             return false;
         }
 
-        public void InquireTrigger(object sender, EventArgs e)
+        public void InquireTrigger()
         {
             //輸入資料確認
             if (InquireData())
             {
                 //確認資料庫連接物件建立
-                SqlTool.JoinData();
+                SqlTool sqlTool = new SqlTool();
                 //來源與資料庫比對
-                if (SqlTool.InquireBool(inquire_account, inquire_email))
+                if (sqlTool.InquireBool(inquire_account, inquire_email))
                 {
                     System.Diagnostics.Debug.WriteLine("查詢成功");
-                    SqlTool.SendAutomatedEmail(inquire_email);
+                    sqlTool.SendAutomatedEmail(inquire_email);
                     Response.Write("<script>alert('郵件已寄出');</script>");
                     Response.Redirect("Login");
                 }

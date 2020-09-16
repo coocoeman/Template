@@ -12,7 +12,10 @@ namespace Template
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Request.Form["account"] != null && Request.Form["password"] != null && Request.Form["ispassword"] != null && Request.Form["username"] != null && Request.Form["email"] != null && Request.Form["address"] != null)
+            {
+                SignupData();
+            }
         }
 
         #region 註冊資料設定
@@ -58,9 +61,10 @@ namespace Template
         /// <returns>沒有重複=true</returns>
         private bool DataOnly()
         {
-            if (SqlTool.Check(SqlTool.account, signup_account)) return false;
-            if (SqlTool.Check(SqlTool.username, signup_username)) return false;
-            if (SqlTool.Check(SqlTool.email, signup_email)) return false;
+            SqlTool sqlTool = new SqlTool();
+            if (sqlTool.Check(SqlTool.account, signup_account)) return false;
+            if (sqlTool.Check(SqlTool.username, signup_username)) return false;
+            if (sqlTool.Check(SqlTool.email, signup_email)) return false;
             return true;
         }
 
@@ -77,9 +81,9 @@ namespace Template
             if (SignupData())
             {
                 //確認資料庫連接物件建立
-                SqlTool.JoinData();
+                SqlTool sqlTool = new SqlTool();
                 //將輸入資料寫入資料庫
-                if (SqlTool.RegisteredBool(signup_account, signup_password, signup_username, signup_email, signup_address))
+                if (sqlTool.RegisteredBool(signup_account, signup_password, signup_username, signup_email, signup_address))
                 {
                     System.Diagnostics.Debug.WriteLine("資料庫寫入成功");
                     Response.Write("<script>alert('註冊成功');history.back();</script>");

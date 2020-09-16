@@ -76,9 +76,9 @@ namespace Template
             if (LoginData())
             {
                 //確認資料庫連接物件建立
-                SqlTool.JoinData();
+                SqlTool sqlTool = new SqlTool();
                 //來源與資料庫比對
-                if (SqlTool.LoginBool(login_account,login_password))
+                if (sqlTool.LoginBool(login_account,login_password))
                 {
                     System.Diagnostics.Debug.WriteLine("登入成功");
                     Session["loginState"] = login_account;

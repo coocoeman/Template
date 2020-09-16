@@ -8,12 +8,16 @@ using System.Web;
 
 namespace SudokuWeb
 {
-    public static class SqlTool
+    public class SqlTool
     {
         
-        #region 資料庫設定
+        #region 資料庫
+        /// <summary>
+        /// 資料庫串聯字串
+        /// </summary>
         const string connect = "TConnectionString";
-        #region 會員資料表
+        #region 會員資料
+
         const string dataSheet = "memberData";//"dbo.member";
 
         public const string account = "account";//"username";
@@ -28,12 +32,17 @@ namespace SudokuWeb
 
         #endregion
 
-        public static SqlConnection connection;
+        public SqlTool()
+        {
+            JoinData();
+        }
+
+        private SqlConnection connection;
         
         /// <summary>
         /// 資料庫連接物件建立
         /// </summary>
-        public static void JoinData()
+        public void JoinData()
         {
             //是否已經有建立過物件
             if (connection != null) return;
@@ -51,7 +60,7 @@ namespace SudokuWeb
         /// <param name="field">欄位名稱</param>
         /// <param name="data">檢查的資料</param>
         /// <returns></returns>
-        public static bool Check(string field,string data)
+        public bool Check(string field,string data)
         {
             //回傳用布林
             bool isOk = false;
@@ -90,7 +99,7 @@ namespace SudokuWeb
         /// <param name="account">帳號資料來源</param>
         /// <param name="password">密碼資料來源</param>
         /// <returns>相同=true;不相同=false</returns>
-        public static bool LoginBool(string account, string password)
+        public bool LoginBool(string account, string password)
         {
             //回傳用布林值
             bool isOk = false;
@@ -138,7 +147,7 @@ namespace SudokuWeb
         /// <param name="name"></param>
         /// <param name="email"></param>
         /// <returns></returns>
-        public static bool RegisteredBool(string account, string password, string name, string email,string address)
+        public bool RegisteredBool(string account, string password, string name, string email,string address)
         {
             bool isOk = false;
 
